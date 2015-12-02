@@ -1,0 +1,33 @@
+<ion-header-bar>
+  <a class="button icon-left ion-chevron-left button-clear button-dark" href="#/mobile" nav-direction="back"></a>
+  <h1 class="title">个人信息（3/4）</h1>
+</ion-header-bar>
+<ion-view>
+  <div class="list has-header">
+    <label class="item item-input">
+      <input type="text" placeholder="请输入您的昵称">
+    </label>
+    <div class="item" style="display: flex; padding: 6px 16px;">
+      <div class="radio-inline">
+      <span class="item item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox">
+        </label>
+        男
+      </span>
+      <span class="item item-checkbox">
+      <label class="checkbox">
+        <input type="checkbox">
+      </label>
+        女
+    </span>
+      </div>
+    </div>
+  </div>
+  <div class="padding">
+      <a class="button button-block button-positive" href="#/captcha">下一步</a>
+  </div>
+  <button onclick="window.plugins.toast.showShortTop('Hello there!', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)})">Toast showShortTop</button>
+  <button onclick="window.plugins.toast.showLongBottom('Hello there!', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)})">Toast showLongBottom</button>
+  <button onclick="window.plugins.toast.show('Hello there!', 'long', 'center', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)})">Toast show long center</button>
+</ion-view>

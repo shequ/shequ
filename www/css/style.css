@@ -1,0 +1,82 @@
+/* Empty. Add your own CSS if you like */
+body a{
+  text-decoration: none;
+}
+.radio-inline{
+  -webkit-box-flex:1;
+  flex: 1 220px;
+}
+.radio-inline .item{
+  border: none;
+  width: 50%;
+  float: left;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+.radio-inline .item .checkbox{
+  margin-top: -14px;
+  padding: 2px 7px;
+}
+
+/*背景*/
+.home-bg{
+  background: url("../img/79bac96c788978475d6364e5f462effa.jpg") no-repeat center top;
+  background-size: cover;
+  color: #fff;
+}
+.home-div{
+  width: 100%;
+  position: absolute;
+  bottom: 2.35vh;
+}
+.home-bg a{
+  text-decoration: none;
+  color: #fff;
+  font-size: 14px;
+}
+.button-register{
+  font-size: 16px;
+  display: inline-block;
+  width: 62.5%;
+  height: 5.5vh;
+  line-height: 5.5vh;
+  background: #da293d;
+  border-radius: 2.75vh;
+}
+.login-bar{
+  background: #3b3b3b;
+}
+/*login.html*/
+.login-close{
+  position: absolute;
+  z-index: 100;
+  right: 20px;
+  top: 20px;
+  font-size: 30px;
+}
+.login-style {
+  background: #f2f2f2;
+}
+.login-style .has-header{
+  top: 0;
+  margin-top: 33vh;
+}
+.button-login{
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  display: inline-block;
+  width: 83.4%;
+  margin: 0 auto;
+  height: 5.5vh;
+  line-height: 5.5vh;
+  background: #da293d;
+  border-radius: 2.75vh;
+}
+.login-text{
+  margin-top: 2vh;
+  padding: 0 10%;
+}
+.login-text a{
+  color: #2a2a2a;
+}
