@@ -44,7 +44,9 @@ body a{
   border-radius: 2.75vh;
 }
 .login-bar{
-  background: #3b3b3b;
+  background: #373737;
+  color: #fff;
+  font-size: 18px;
 }
 /*login.html*/
 .login-close{
@@ -61,17 +63,20 @@ body a{
   top: 0;
   margin-top: 33vh;
 }
-.button-login{
+.login-btn-clear{
   color: #fff;
   text-decoration: none;
   font-size: 16px;
   display: inline-block;
   width: 83.4%;
   margin: 0 auto;
-  height: 5.5vh;
-  line-height: 5.5vh;
+  height: 5.6vh;
+  line-height: 5.6vh;
+  border-radius: 1.2vh;
+  background: #dcdcdc;
+}
+.button-login{
   background: #da293d;
-  border-radius: 2.75vh;
 }
 .login-text{
   margin-top: 2vh;
@@ -79,4 +84,17 @@ body a{
 }
 .login-text a{
   color: #2a2a2a;
+}
+.login-bar .button{
+  color: #fff !important;
+}
+.login-bar .title{
+  color: #fff;
+  font-size: 18px;
+}
+.view-container{
+  background: #e3e3e3;
+}
+.login-div .has-header{
+  top: 60px;
 }

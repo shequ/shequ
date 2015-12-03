@@ -1,20 +1,18 @@
-<ion-header-bar>
+<ion-header-bar class="login-bar">
   <a class="button icon-left ion-chevron-left button-clear button-dark" href="#/mobile" nav-direction="back"></a>
-  <h1 class="title">验证码&密码（1/4）</h1>
+  <h1 class="title">验证码&密码（2/4）</h1>
 </ion-header-bar>
-<ion-view>
+<ion-view class="view-container login-div">
   <div class="list has-header">
-    <label class="item">
-      验证短信已发送至
-+86 136789900    </label>
     <label class="item item-input">
-      <input type="text" placeholder="输入验证码">
+      <input type="tel" placeholder="输入验证码">
+      <a class="button button-light">60s</a>
     </label>
     <label class="item item-input">
       <input type="password" placeholder="这是密码">
     </label>
-  </div>
-  <div class="padding">
-    <a class="button button-block button-positive" href="#/captcha">下一步</a>
+    <div class="padding" style="margin-top: 10px; text-align: center">
+      <a class="login-btn-clear" href="#/user-name" nav-direction="forward">下一步</a>
+    </div>
   </div>
 </ion-view>
