@@ -1,18 +1,18 @@
 <ion-header-bar class="login-bar">
   <a class="button icon-left ion-chevron-left button-clear button-dark" href="#/mobile" nav-direction="back"></a>
-  <h1 class="title">验证码&密码（2/4）</h1>
+  <h1 class="title">验证码&密码（2/3）</h1>
 </ion-header-bar>
 <ion-view class="view-container login-div">
-  <div class="list has-header">
+  <div class="list has-header" ng-controller="getPWD">
     <label class="item item-input">
       <input type="tel" placeholder="输入验证码">
-      <a class="button button-light">60s</a>
+      <a class="button button-light" ng-class="{true:'button-login',false:''}[isClick]" ng-model="text">{{counter}}</a>
     </label>
     <label class="item item-input">
-      <input type="password" placeholder="这是密码">
+      <input type="password" placeholder="请输入密码" ng-model="userInfo.pwd" ng-change="changeInput()">
     </label>
     <div class="padding" style="margin-top: 10px; text-align: center">
-      <a class="login-btn-clear" href="#/user-name" nav-direction="forward">下一步</a>
+      <a class="login-btn-clear" ng-class="{true:'button-login',false:''}[isClick]" nav-direction="forward" ng-click="setPWD(isClick)">下一步</a>
     </div>
   </div>
 </ion-view>

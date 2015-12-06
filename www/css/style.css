@@ -24,6 +24,11 @@ body a{
   background-size: cover;
   color: #fff;
 }
+.landing-bg{
+  background: url("../img/b14c2800f42becaf4d627debb812a326.jpg") no-repeat center top;
+  background-size: cover;
+  color: #fff;
+}
 .home-div{
   width: 100%;
   position: absolute;
@@ -77,6 +82,7 @@ body a{
 }
 .button-login{
   background: #da293d;
+  cursor: pointer;
 }
 .login-text{
   margin-top: 2vh;

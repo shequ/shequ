@@ -25,5 +25,13 @@ angular.module('syl.routes', [])
           url:'/user-name',
           templateUrl:'templates/login/user-name.html'
         })
-    $urlRouterProvider.otherwise("/home");
+        .state("first-page",{
+          url:'/first-page',
+          templateUrl:'templates/first.html'
+        })
+        .state("landing",{
+          url:'/landing',
+          templateUrl:'templates/landing.html'
+        })
+    $urlRouterProvider.otherwise("/landing");
   })

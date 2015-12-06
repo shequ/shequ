@@ -1,18 +1,18 @@
 <ion-header-bar class="login-bar">
   <a class="button icon-left ion-chevron-left button-clear button-dark" href="#/home" nav-direction="back"></a>
-  <h1 class="title">手机号（1/4）</h1>
+  <h1 class="title">手机号（1/3）</h1>
 </ion-header-bar>
-<ion-view class="view-container login-div" ng-controller="PopupCtrl">
+<ion-view class="view-container login-div" ng-controller="getMobile">
   <div class="list has-header">
     <label class="item item-icon-right">
-      中国（+ 86）
+      +86
       <i class="icon ion-ios-arrow-right" style="color:#cbcbcb;"></i>
     </label>
     <label class="item item-input">
-      <input type="text" placeholder="手机号码" ng-change="">
+      <input type="tel" placeholder="手机号码" ng-model="userInfo.mobile" ng-change="getFormMobile()">
     </label>
     <div class="padding" style="margin-top: 10px; text-align: center">
-      <a class="login-btn-clear" nav-direction="forward">下一步</a>
+      <a class="login-btn-clear" ng-class="{true:'button-login',false:''}[isClick]" nav-direction="forward" ng-click="nextCode(isClick)">下一步</a>
     </div>
     <p class="login-text" style="margin-top: 0">
       点击下一步表示同意《用户协议》
