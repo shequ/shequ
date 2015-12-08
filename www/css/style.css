@@ -46,7 +46,7 @@ body a{
   height: 5.5vh;
   line-height: 5.5vh;
   background: #da293d;
-  border-radius: 2.75vh;
+  border-radius: 8px;
 }
 .login-bar{
   background: #373737;

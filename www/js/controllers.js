@@ -6,11 +6,10 @@ angular.module('syl.controllers', [])
     var counter=5;
     $scope.countdown = function() {
       if(counter==0){
-        if(localStorage.isLogin==1||localStorage.mobile!=''){
+        if(localStorage.isLogin==1&&localStorage.mobile!=''){
           $location.path('/first-page');
         }else{
           localStorage.isLogin=0;
-          localStorage.mobile='';
           $location.path('/home');
         }
       }else {
@@ -25,7 +24,10 @@ angular.module('syl.controllers', [])
     $scope.countdown();
   }])
 
-  .controller('firstPage',['$scope','$http',function($scope,$http){
+  .controller('firstPage',['$scope','$http','$location',function($scope,$http,$location){
+    if(localStorage.isLogin==0){
+      $location.path('/home');
+    }
     $http.post('http://115.159.102.63:8080/Syl/syl_user_acc_read_sng_svlt',{
       "select": "*",
       "where": 'mobile=' + localStorage.mobile
@@ -40,6 +42,14 @@ angular.module('syl.controllers', [])
       alert('请检查网络')
       return false
     });
+
+    $scope.loginOut = function(){
+      localStorage.isLogin=0;
+      localStorage.name='';
+      localStorage.mobile='';
+      localStorage.pwd='';
+      $location.path('/home');
+    }
   }])
 
   .controller('getMobile', ['$scope', '$http', '$location','$ionicLoading',
@@ -172,7 +182,7 @@ angular.module('syl.controllers', [])
         if(rc==0){
           $ionicLoading.show({ template: '恭喜您注册成功', noBackdrop: true, duration: 1000 });
           localStorage.isLogin = 1;
-          $location.hash()
+          $location.path('/first-page')
         }
 
       }).error(function (data, status, headers, config) {
