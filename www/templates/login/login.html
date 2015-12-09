@@ -1,15 +1,15 @@
 <ion-view style="background: #f2f2f2">
-  <ion-content class="login-style" ng-controller="login">
+  <ion-content class="login-style" ng-controller="loginPage">
     <div class="list has-header">
       <label class="item item-input">
-        <input type="text" placeholder="请输入手机号码/账号/邮箱">
+        <input type="text" placeholder="请输入手机号码/账号/邮箱" ng-model="userLoginName">
       </label>
       <label class="item item-input">
-        <input type="password" placeholder="请输入密码">
+        <input type="password" placeholder="请输入密码" ng-model="pwd">
       </label>
     </div>
     <div style="text-align: center">
-      <a class="button-login login-btn-clear" href="#/user-name" nav-direction="forward">登录</a>
+      <a class="button-login login-btn-clear" nav-direction="forward" ng-click="loginApp()">登录</a>
     </div>
     <p class="login-text">
       <a>海外手机号请点击这里</a>

@@ -1,4 +1,4 @@
-function syl_user_acc_crt_sng(str_syl_user_acc, tbl_msg) {
+function syl_user_acc_crt_sng(str_syl_user_acc, vald_flg, tbl_msg) {
   var rc = 0;
   var str_syl_user_acc_json_str = "";
   var str_msg = new Object();

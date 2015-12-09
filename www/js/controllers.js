@@ -22,12 +22,24 @@ angular.module('syl.controllers', [])
       };
     }
     $scope.countdown();
+    $scope.jumpTo=function(){
+      if(localStorage.isLogin==1&&localStorage.mobile!=''){
+          $location.path('/first-page');
+      }else{
+        localStorage.isLogin=0;
+         $location.path('/home');
+      }
+    }
   }])
 
   .controller('firstPage',['$scope','$http','$location',function($scope,$http,$location){
+    $scope.userid=localStorage.name;
+    $scope.mobile=localStorage.mobile;
+    $scope.gender=localStorage.gender;
     if(localStorage.isLogin==0){
       $location.path('/home');
     }
+
     $http.post('http://115.159.102.63:8080/Syl/syl_user_acc_read_sng_svlt',{
       "select": "*",
       "where": 'mobile=' + localStorage.mobile
@@ -43,6 +55,7 @@ angular.module('syl.controllers', [])
       return false
     });
 
+
     $scope.loginOut = function(){
       localStorage.isLogin=0;
       localStorage.name='';
@@ -51,7 +64,56 @@ angular.module('syl.controllers', [])
       $location.path('/home');
     }
   }])
+  .controller('loginPage',['$scope','$http','$location','$ionicLoading',function($scope,$http,$location,$ionicLoading){
+    $scope.userLoginName='';
+    $scope.pwd=''
+    $scope.loginApp=function(){
+      if($scope.userLoginName==''){
+        console.log(111);
+        $ionicLoading.show({ template: '用户名不能为空', noBackdrop: true, duration: 1500 });
+        return false
+      }else if($scope.pwd==''){
+        console.log(11222);
+        $ionicLoading.show({ template: '密码不能为空', noBackdrop: true, duration: 1500 });
+        return false
+      }else{
+        console.log($scope.userLoginName)
+        var rc = 0;
+        var str_msg = new Object();
+        var str_syl_user_acc = new Object();
+        var sb = new StringBuilder();
 
+        $http.post("http://115.159.102.63:8080/Syl/syl_user_acc_read_sng_svlt",{
+          "select": "*",
+          "where": 'user_id="' + $scope.userLoginName + '" or mobile="'+ $scope.userLoginName+'"'
+        }).success(function (data, status, headers, config) {
+          rc = data.rc;
+          if (rc == 0) {
+            if(data.str_syl_user_acc.password==$scope.pwd){
+              console.log('登录成功');
+              localStorage.isLogin=1;
+              localStorage.uuid=data.str_syl_user_acc.uuid;
+              localStorage.name=data.str_syl_user_acc.user_id;
+              localStorage.mobile=data.str_syl_user_acc.mobile;
+              localStorage.gender=data.str_syl_user_acc.gender;
+              localStorage.email=data.str_syl_user_acc.email;
+              $location.path('/first-page');
+            }else {
+              console.log('密码不正确');
+              $ionicLoading.show({ template: '密码不正确', noBackdrop: true, duration: 1500 });
+            }
+          }else {
+            console.log('您输入的账号有误');
+            $ionicLoading.show({ template: '您输入的账号有误', noBackdrop: true, duration: 1500 });
+          }
+        }).error(function (data, status, headers, config) {
+          console.log("error...");
+          alert('请检查网络')
+          return false
+        });
+      }
+    }
+  }])
   .controller('getMobile', ['$scope', '$http', '$location','$ionicLoading',
     function ($scope, $http, $location,$ionicLoading) {
       $scope.userInfo = {};
@@ -172,11 +234,12 @@ angular.module('syl.controllers', [])
       str_syl_user_acc.age = '';
       str_syl_user_acc.last_name = '';
       str_syl_user_acc.first_name = '';
-      console.log(syl_user_acc_crt_sng(str_syl_user_acc, tbl_msg));
+      console.log(syl_user_acc_crt_sng(str_syl_user_acc, 'X', tbl_msg));
 
 
       $http.post("http://115.159.102.63:8080/Syl/syl_user_acc_crt_sng_svlt",{
-        "str_syl_user_acc": syl_user_acc_crt_sng(str_syl_user_acc, tbl_msg)
+        "str_syl_user_acc": syl_user_acc_crt_sng(str_syl_user_acc,'X',tbl_msg),
+        "vald_flg": 'X'
       }).success(function (data, status, headers, config) {
         rc = data.rc;
         if(rc==0){

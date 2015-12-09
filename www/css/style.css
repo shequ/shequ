@@ -42,9 +42,9 @@ body a{
 .button-register{
   font-size: 16px;
   display: inline-block;
-  width: 62.5%;
-  height: 5.5vh;
-  line-height: 5.5vh;
+  width: 68.5%;
+  height: 35px;
+  line-height: 35px;
   background: #da293d;
   border-radius: 8px;
 }
@@ -75,8 +75,8 @@ body a{
   display: inline-block;
   width: 83.4%;
   margin: 0 auto;
-  height: 5.6vh;
-  line-height: 5.6vh;
+  height: 35px;
+  line-height: 35px;
   border-radius: 1.2vh;
   background: #dcdcdc;
 }
@@ -103,4 +103,19 @@ body a{
 }
 .login-div .has-header{
   top: 60px;
+}
+
+.jumpTo{
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  border: 1px solid #d5d5d5;
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 15px;
+  color: #fff;
+  background: #000;
+  border-radius: 15px;
+  opacity: .3;
 }

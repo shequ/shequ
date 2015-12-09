@@ -1,9 +1,9 @@
 <ion-view ng-controller="firstPage">
   <div class="card">
     <div class="item item-text-wrap">
-      <p>用户名:{{userInfo.user_id}}</p>
-      <p>性别:{{userInfo.gender}}</p>
-      <p>手机号码:{{userInfo.mobile}}</p>
+      <p>用户名:<span ng-bind="userid"></span></p>
+      <p>性别:<span ng-bind="mobile"></span></p>
+      <p>手机号码:<span ng-bind="gender"></span></p>
       <p><a class="button button-block" ng-click="loginOut()">注销</a></p>
     </div>
   </div>
