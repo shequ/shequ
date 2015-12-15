@@ -256,3 +256,8 @@ angular.module('syl.controllers', [])
     }
   }
 }])
+  .controller('ContactsCtrl', ['$scope', 'Contacts', function ($scope, Contacts) {
+    $scope.modelName = 'contacts';
+    $scope[$scope.modelName] = Contacts.all();
+    console.log(Contacts.all());
+  }])

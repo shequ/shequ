@@ -40,5 +40,10 @@ angular.module('syl.routes', [])
           url:'/landing',
           templateUrl:'templates/landing.html'
         })
+        .state("quhao",{
+          url:'/quhao',
+          templateUrl:'templates/quhao.html',
+          controller: 'ContactsCtrl'
+        })
     $urlRouterProvider.otherwise("/landing");
   })
