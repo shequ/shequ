@@ -13,7 +13,7 @@ angular.module('ion-index-scroll', [])
                         '<ion-scroll delegate-handle="indexScroll" has-bouncing="false">',
                         '<div data-ng-repeat="items in sortedItems" class="ion_index_list">',
                         '<ion-item class="item item-divider" id="index_{{modelName}}_{{items[0].dividerHeader}}">{{items[0].dividerHeader}}</ion-item>',
-                        '<ion-item ng-repeat="item in items"></ion-item>',
+                        '<ion-item ng-repeat="item in items" ng-click="getQuhao(item)" nav-direction="back"></ion-item>',
                         '</div>',
                         '</ion-scroll>',
                         '<ul class="ion_index_sidebar">',

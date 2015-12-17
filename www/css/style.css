@@ -17,7 +17,18 @@ body a{
   margin-top: -14px;
   padding: 2px 7px;
 }
-
+.bar.bar-stable .title{
+  color: #fff;
+}
+.bar.bar-stable{
+  background: #373737;
+}
+.bar-stable .button.button-clear{
+  color: #fff;
+}
+.bar-stable .back-text{
+  display: none !important;
+}
 /*背景*/
 .home-bg{
   background: url("../img/79bac96c788978475d6364e5f462effa.jpg") no-repeat center top;
