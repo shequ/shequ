@@ -121,14 +121,16 @@ angular.module('syl.controllers', [])
       $scope.isClick = false;
       //console.log(getLocalStorage('user_acc','country').code);
       if (getLocalStorage('user_acc', 'country') == null) {
-
         console.log('zhongguo');
+        $scope.cod='+86';
         return false;
       } else {
         if (getLocalStorage('user_acc', 'country').code == 'CN' || getLocalStorage('user_acc', 'country') == '') {
           console.log('中国');
+          $scope.cod='+86';
         } else {
           console.log('外国');
+          $scope.cod=getLocalStorage('user_acc','country').dial_code;
         }
       }
 
@@ -151,7 +153,7 @@ angular.module('syl.controllers', [])
           var user_mobile = $scope.userInfo.mobile;
           setLocalStorage('user_acc', 'mobile', user_mobile);
           if (sMobile.test($scope.userInfo.mobile)) {
-            $http.post("http://115.159.102.63:8080/Syl/syl_user_acc_read_sng_svlt", {
+            $http.post("http://115.159.102.63/Syl/syl_user_acc_read_sng_svlt", {
               "select": "*",
               "where": 'mobile=' + $scope.userInfo.mobile,
               "vald_flg": "X"
@@ -178,8 +180,12 @@ angular.module('syl.controllers', [])
         }
       }
     }])
-  .controller('getPWD', ['$scope', '$timeout', '$location', '$ionicLoading', function ($scope, $timeout, $location, $ionicLoading) {
-    //$scope.counter = 5;
+  .controller('getPWD', ['$scope', '$timeout', '$location', '$ionicLoading', '$http', function ($scope, $timeout, $location, $ionicLoading,$http) {
+
+    $http.post("http://115.159.102.63/Syl/syl_txt_cd_mod_sng_svlt",{
+      "str_syl_txt_cd": syl_txt_cd_mod_sng(),
+      "vald_flg": "X"
+    })
 
     var counter = 60;
     $scope.isClick = 0;
