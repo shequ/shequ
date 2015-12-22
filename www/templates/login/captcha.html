@@ -1,7 +1,7 @@
 <ion-view view-title="验证码&密码（2/3）" class="view-container login-div">
   <div class="list has-header" ng-controller="getPWD">
     <label class="item item-input">
-      <input type="tel" placeholder="输入验证码">
+      <input type="tel" placeholder="输入验证码" ng-model="userInfo.code" ng-change="changeInput()">
       <a class="button button-light" ng-class="{true:'button-login',false:''}[isClick]" ng-model="text" style="height: 34px; line-height: 34px; min-height: 34px; padding: 0 9px; min-width: auto;">{{counter}}</a>
     </label>
     <label class="item item-input">
