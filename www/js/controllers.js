@@ -1,6 +1,11 @@
 /**
  * Created by scl on 2015/12/1.
  */
+var china = {
+  "name": "China",
+  "dial_code": "+86",
+  "code": "CN"
+};
 angular.module('syl.controllers', [])
   .controller('landing', ['$scope', '$timeout', '$location', function ($scope, $timeout, $location) {
     var counter = 3;
@@ -49,46 +54,82 @@ angular.module('syl.controllers', [])
   }])
   .controller('loginPage', ['$scope', '$http', '$location', '$ionicLoading', function ($scope, $http, $location, $ionicLoading) {
     $scope.userLoginName = '';
-    $scope.pwd = ''
+    $scope.pwd = '';
+    var Regx_num = /^[0-9]*$/;
+    var Regx_mail;
+
     $scope.loginApp = function () {
       if ($scope.userLoginName == '') {
-        console.log(111);
         $ionicLoading.show({template: '用户名不能为空', noBackdrop: true, duration: 1500});
         return false
       } else if ($scope.pwd == '') {
-        console.log(11222);
         $ionicLoading.show({template: '密码不能为空', noBackdrop: true, duration: 1500});
         return false
       } else {
-        console.log($scope.userLoginName)
         var rc = 0;
         var str_msg = new Object();
         var str_syl_user_acc = new Object();
         var sb = new StringBuilder();
-
-        $http.post("http://115.159.102.63/Syl/syl_user_acc_read_sng_svlt", {
-          "select": "*",
-          "where": 'username="' + $scope.userLoginName + '" or mobile="' + $scope.userLoginName + '"'
-        }).success(function (data, status, headers, config) {
-          rc = data.rc;
-          if (rc == 0) {
-            if (data.str_syl_user_acc.password == $scope.pwd) {
-              console.log('登录成功');
-              localStorage.isLogin = 1;
-              $location.path('/first-page');
+        var pwdUp = MD5($scope.pwd).toUpperCase();
+        //如果输入的是全数字
+        if(Regx_num.test($scope.userLoginName)){
+          console.log('您输入的是全数字');
+          $http.post("http://115.159.102.63/Syl/syl_user_acc_read_sng_svlt", {
+            "select": "*",
+            "where": 'mobile="+86' + $scope.userLoginName + '"'
+          }).success(function (data, status, headers, config) {
+            rc = data.rc;
+            if (rc == 0) {
+              if (data.str_syl_user_acc.password == pwdUp) {
+                console.log('登录成功');
+                localStorage.isLogin = 1;
+                resetLocalStorage('user_acc');
+                setJsonLocalStorage('user_acc', data.str_syl_user_acc);
+                $location.path('/first-page');
+              } else {
+                console.log('密码不正确');
+                $ionicLoading.show({template: '密码不正确', noBackdrop: true, duration: 1500});
+              }
             } else {
-              console.log('密码不正确');
-              $ionicLoading.show({template: '密码不正确', noBackdrop: true, duration: 1500});
+              console.log('您输入的账号有误');
+              $ionicLoading.show({template: '您输入的账号有误', noBackdrop: true, duration: 1500});
             }
-          } else {
-            console.log('您输入的账号有误');
-            $ionicLoading.show({template: '您输入的账号有误', noBackdrop: true, duration: 1500});
-          }
-        }).error(function (data, status, headers, config) {
-          console.log("error...");
-          alert('请检查网络')
-          return false
-        });
+          }).error(function (data, status, headers, config) {
+            console.log("error...");
+            alert('请检查网络')
+            return false
+          });
+        }else{
+          console.log('您输入的非全数字');
+          console.log(MD5($scope.userLoginName));
+          $http.post("http://115.159.102.63/Syl/syl_user_acc_read_sng_svlt", {
+            "select": "*",
+            "where": 'username="' + $scope.userLoginName + '"'
+          }).success(function (data, status, headers, config) {
+            rc = data.rc;
+            if (rc == 0) {
+              if (data.str_syl_user_acc.password == pwdUp) {
+                console.log('登录成功');
+                localStorage.isLogin = 1;
+                resetLocalStorage('user_acc');
+                setJsonLocalStorage('user_acc', data.str_syl_user_acc);
+                $location.path('/first-page');
+              } else {
+                console.log('密码不正确');
+                $ionicLoading.show({template: '密码不正确', noBackdrop: true, duration: 1500});
+              }
+            } else {
+              console.log('您输入的账号有误');
+              $ionicLoading.show({template: '您输入的账号有误', noBackdrop: true, duration: 1500});
+            }
+          }).error(function (data, status, headers, config) {
+            console.log("error...");
+            alert('请检查网络')
+            return false
+          });
+        }
+        console.log($scope.userLoginName)
+
       }
     }
   }])
@@ -96,16 +137,12 @@ angular.module('syl.controllers', [])
     function ($scope, $http, $location, $ionicLoading) {
       $scope.userInfo = {};
       $scope.isClick = false;
-      var china = {
-        "name": "China",
-        "dial_code": "+86",
-        "code": "CN"
-      };
+
       if (getLocalStorage('user_acc', 'country') == null) {
         console.log('zhongguo');
         $scope.cod = '+86';
-        setLocalStorage('temp','country',china);
-        setLocalStorage('user_acc', 'country','CN');
+        setLocalStorage('temp', 'country', china);
+        setLocalStorage('user_acc', 'country', 'CN');
         return false;
       } else {
         if (getLocalStorage('temp', 'country').code == 'CN' || getLocalStorage('temp', 'country') == '') {
@@ -118,10 +155,10 @@ angular.module('syl.controllers', [])
       }
 
       $scope.getFormMobile = function () {
-        if ($scope.userInfo.mobile != "") {
-          $scope.isClick = true;
-        } else {
+        if ($scope.userInfo.mobile == "") {
           $scope.isClick = false;
+        } else {
+          $scope.isClick = true;
         }
       }
       $scope.nextCode = function (e) {
@@ -302,6 +339,7 @@ angular.module('syl.controllers', [])
   .controller('getUserName', ['$scope', '$location', '$http', '$ionicLoading', '$location', function ($scope, $location, $http, $ionicLoading, $location) {
     $scope.isClick = 0;
     $scope.radio = '男';
+    var Regx = /^[0-9]*$/;
 
     $scope.changeName = function () {
       if ($scope.userInfo.username != '') {
@@ -315,35 +353,42 @@ angular.module('syl.controllers', [])
       if ($scope.isClick == false) {
         return false
       } else {
-        setLocalStorage('user_acc', 'username', $scope.userInfo.username);
-        setLocalStorage('user_acc', 'gender', $scope.radio);
-        tbl_msg = new Array();
-        str_syl_user_acc = new Object();
+        if (Regx.test($scope.userInfo.username)) {
+          $ionicLoading.show({template: '用户名不能为全数字', noBackdrop: true, duration: 1000});
+          return false;
+        } else {
 
-        console.log(syl_user_acc_upd_sng(str_syl_user_acc, 'X', tbl_msg));
+          setLocalStorage('user_acc', 'username', $scope.userInfo.username);
+          setLocalStorage('user_acc', 'gender', $scope.radio);
+          tbl_msg = new Array();
+          str_syl_user_acc = new Object();
 
-        $http.post("http://115.159.102.63/Syl/syl_user_acc_upd_sng_svlt", {
-          "str_syl_user_acc": localStorage.user_acc,
-          "vald_flg": 'X'
-        }).success(function (data, status, headers, config) {
-          rc = data.rc;
-          if (rc == 0) {
-            $location.path('/first-page');
-          }
-        }).error(function (data, status, headers, config) {
-          console.log("error...");
-          alert('请检查网络')
-          return false
-        });
+          console.log(syl_user_acc_upd_sng(str_syl_user_acc, 'X', tbl_msg));
+
+          $http.post("http://115.159.102.63/Syl/syl_user_acc_upd_sng_svlt", {
+            "str_syl_user_acc": localStorage.user_acc,
+            "vald_flg": 'X'
+          }).success(function (data, status, headers, config) {
+            rc = data.rc;
+            if (rc == 0) {
+              $location.path('/first-page');
+            }
+          }).error(function (data, status, headers, config) {
+            console.log("error...");
+            alert('请检查网络')
+            return false
+          });
+        }
       }
     }
   }])
-  .controller('ContactsCtrl', ['$scope', 'Contacts', '$location', function ($scope, Contacts, $location) {
+  .controller('ContactsCtrl', ['$scope', 'Contacts', '$location','$ionicHistory', function ($scope, Contacts, $location,$ionicHistory) {
     $scope.modelName = 'contacts';
     $scope[$scope.modelName] = Contacts.all();
     $scope.getQuhao = function (e) {
+      console.log(e);
       setLocalStorage('temp', 'country', e);
       setLocalStorage('user_acc', 'country', e.code);
-      $location.path('/mobile');
+      $ionicHistory.goBack();
     }
   }])

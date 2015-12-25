@@ -1,4 +1,4 @@
-<ion-view style="background: #f2f2f2">
+<ion-view hide-nav-bar="true" style="background: #f2f2f2">
   <ion-content class="login-style" ng-controller="loginPage">
     <div class="list has-header">
       <label class="item item-input">
@@ -12,7 +12,7 @@
       <a class="button-login login-btn-clear" nav-direction="forward" ng-click="loginApp()">登录</a>
     </div>
     <p class="login-text">
-      <a>海外手机号请点击这里</a>
+      <a href="#/quhao" nav-direction="forward">海外手机号请点击这里</a>
     </p>
   </ion-content>
   <a class="ion-close-round login-close" href="#/home" nav-direction="back"></a>

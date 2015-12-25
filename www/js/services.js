@@ -5,7 +5,6 @@ angular.module('syl.services', [])
   .factory('Contacts', function () {
     // Some fake testing data
     var contacts = [
-
       {
         "name": "Afghanistan",
         "dial_code": "+93",
