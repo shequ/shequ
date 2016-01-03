@@ -1,12 +1,10 @@
-/**
- * Created by scl on 2015/12/26.
- */
 
 var str_syl_user_acc_json_str = "";
 var str_syl_sess_json_str = "";
-function syl_login(str_syl_user_acc,
-                   str_syl_sess,
-                   tbl_msg) {
+function syl_logon(//test
+  str_syl_user_acc,
+  str_syl_sess,
+  tbl_msg) {
   var str_msg = new Object();
   var req_sb = new StringBuilder();
   var rc = 0;
@@ -78,8 +76,8 @@ function syl_login(str_syl_user_acc,
   req_sb.append("}");
 
   str_syl_user_acc_json_str = req_sb.toString("");
-  req_sb = new StringBuilder();
 //alert(str_syl_user_acc_json_str);
+  req_sb = new StringBuilder();
 
   req_sb.append("{");
   req_sb.append("\"");

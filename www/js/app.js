@@ -66,7 +66,7 @@ angular.module('starter', ['ionic','syl.controllers','syl.directives','monospace
       }
     });
   })
-  .run(['$ionicPlatform', '$ionicPopup','$rootScope','$location', function ($ionicPlatform, $ionicPopup, $rootScope, $location) {
+  .run(['$ionicPlatform', '$ionicPopup','$rootScope','$location','$ionicHistory', function ($ionicPlatform, $ionicPopup, $rootScope, $location,$ionicHistory) {
 
     //主页面显示退出提示框
     $ionicPlatform.registerBackButtonAction(function (e) {
@@ -95,10 +95,10 @@ angular.module('starter', ['ionic','syl.controllers','syl.directives','monospace
         showConfirm();
       }else if($location.path() == '/first-page'){
         showConfirm();
-      }else if ($rootScope.$viewHistory.backView ) {
-        console.log('currentView:', $rootScope.$viewHistory.currentView);
+      }else if ($ionicHistory.backView()) {
+        $ionicHistory.goBack();
         // Go back in history
-        $rootScope.$viewHistory.backView.go();
+       // $rootScope.$viewHistory.backView.go();
       } else {
         // This is the last page: Show confirmation popup
         showConfirm();

@@ -7,7 +7,7 @@ var china = {
   "code": "CN"
 };
 angular.module('syl.controllers', [])
-  .controller('landing', ['$scope', '$timeout', '$location', function ($scope, $timeout, $location) {
+  .controller('landing', ['$scope', '$timeout', '$location','$ionicHistory', function ($scope, $timeout, $location,$ionicHistory) {
     var counter = 3;
     $scope.countdown = function () {
       if (counter == 0) {
@@ -38,7 +38,7 @@ angular.module('syl.controllers', [])
     }
   }])
 
-  .controller('firstPage', ['$scope', '$http', '$location', function ($scope, $http, $location) {
+  .controller('firstPage', ['$scope', '$http', '$location','$ionicHistory', function ($scope, $http, $location,$ionicHistory) {
     $scope.userid = getLocalStorage('user_acc', 'username');
     $scope.mobile = getLocalStorage('user_acc', 'mobile');
     $scope.gender = getLocalStorage('user_acc', 'gender');
@@ -52,7 +52,7 @@ angular.module('syl.controllers', [])
       $location.path('/home');
     }
   }])
-  .controller('loginPage', ['$scope', '$http', '$location', '$ionicLoading', function ($scope, $http, $location, $ionicLoading) {
+  .controller('loginPage', ['$scope', '$http', '$location', '$ionicLoading','$ionicHistory', function ($scope, $http, $location, $ionicLoading,$ionicHistory) {
     $scope.userLoginName = '';
     $scope.pwd = '';
     var Regx_num = /^[0-9]*$/;
@@ -80,16 +80,16 @@ angular.module('syl.controllers', [])
           str_syl_user_acc.mobile = "+86" + $scope.userLoginName;
           str_syl_user_acc.password = pwdUp;
 
-          syl_login(str_syl_user_acc, str_syl_sess, str_msg);
-          console.log(str_syl_user_acc_json_str);
-          console.log(str_syl_sess_json_str);
+          syl_logon(str_syl_user_acc, str_syl_sess, str_msg);
 
-          $http.post("http://115.159.102.63:80/Syl/syl_login_svlt", {
+          $http.post("http://115.159.102.63:80/Syl/syl_logon_svlt", {
             "str_syl_user_acc": str_syl_user_acc_json_str,
             "str_syl_sess": str_syl_sess_json_str
           }).success(function (data, status, headers, config) {
             rc = data.rc;
             if (rc == 0) {
+              localStorage.setItem('session',data.str_syl_sess.uuid);
+              setLocalStorage('user_acc','uuid',data.str_syl_sess.uuid_user);
               localStorage.isLogin = 1;
               $scope.getUserId();
             } else {
@@ -103,43 +103,24 @@ angular.module('syl.controllers', [])
           console.log('您输入的非全数字');
           console.log(MD5($scope.userLoginName));
           $ionicLoading.show({template: '暂时只能手机号码登录', noBackdrop: true, duration: 1500});
-          /*
-          $http.post("http://115.159.102.63/Syl/syl_user_acc_read_sng_svlt", {
-            "select": "*",
-            "where": 'username="' + $scope.userLoginName + '"'
-          }).success(function (data, status, headers, config) {
-            rc = data.rc;
-            if (rc == 0) {
-              if (data.str_syl_user_acc.password == pwdUp) {
-                console.log('登录成功');
-                localStorage.isLogin = 1;
-                resetLocalStorage('user_acc');
-                setJsonLocalStorage('user_acc', data.str_syl_user_acc);
-                $location.path('/first-page');
-              } else {
-                console.log('密码不正确');
-                $ionicLoading.show({template: '密码不正确', noBackdrop: true, duration: 1500});
-              }
-            } else {
-              console.log('您输入的账号有误');
-              $ionicLoading.show({template: '您输入的账号有误', noBackdrop: true, duration: 1500});
-            }
-          }).error(function (data, status, headers, config) {
-            console.log("error...");
-            alert('请检查网络')
-            return false
-          });*/
         }
       }
     }
     $scope.getUserId = function () {
       var rc;
       var str_msg = new Object();
-      var str_syl_user_acc = new Object();
+      var str_syl_sess = new Object();
+
+      str_syl_sess.uuid=localStorage.getItem('session');
+      str_syl_sess.user_uuid = getLocalStorage('user_acc','uuid');
+
+      syl_user_acc_read_sng(str_syl_sess,str_msg);
+      console.log(str_syl_sess_json_str);
+
       $http.post("http://115.159.102.63/Syl/syl_user_acc_read_sng_svlt", {
         "select": '*',
-        "where": 'mobile =' + getLocalStorage('temp', 'country').dial_code + getLocalStorage('user_acc', 'mobile'),
-        "sess_id": ""
+        "where": 'uuid ="' + getLocalStorage('user_acc','uuid')+'"',
+        "str_syl_sess": str_syl_sess_json_str
       }).success(function (data, status, headers, config) {
         rc = data.rc;
         if (rc == 0) {
@@ -152,8 +133,8 @@ angular.module('syl.controllers', [])
       })
     }
   }])
-  .controller('getMobile', ['$scope', '$http', '$location', '$ionicLoading',
-    function ($scope, $http, $location, $ionicLoading) {
+  .controller('getMobile', ['$scope', '$http', '$location', '$ionicLoading','$ionicHistory',
+    function ($scope, $http, $location, $ionicLoading, $ionicHistory) {
       $scope.userInfo = {};
       $scope.isClick = false;
 
@@ -189,17 +170,18 @@ angular.module('syl.controllers', [])
           var str_msg = new Object();
           var str_syl_user_acc = new Object();
           var sb = new StringBuilder();
-          var user_mobile = $scope.userInfo.mobile;
+          var user_mobile = getLocalStorage('temp', 'country').dial_code+ $scope.userInfo.mobile;
+          str_syl_user_acc.mobile =user_mobile;
+          syl_chk_acc_exst(str_syl_user_acc, str_msg);
+          console.log(str_syl_user_acc_json_str);
           setLocalStorage('user_acc', 'mobile', user_mobile);
           if (getLocalStorage('temp', 'country').code !== 'CN') {
             $ionicLoading.show({template: '暂时只支持中国大陆地区手机号码', noBackdrop: true, duration: 1500});
             return false
           } else {
             if (sMobile.test($scope.userInfo.mobile)) {
-              $http.post("http://115.159.102.63/Syl/syl_user_acc_read_sng_svlt", {
-                "select": "*",
-                "where": 'mobile=' + getLocalStorage('temp', 'country').dial_code + $scope.userInfo.mobile,
-                "sess_id": ''
+              $http.post("http://115.159.102.63:80/Syl/syl_chk_acc_exst_svlt", {
+                "str_syl_user_acc": str_syl_user_acc_json_str
               }).success(function (data, status, headers, config) {
                 rc = data.rc;
                 if (rc == 0) {
@@ -239,7 +221,7 @@ angular.module('syl.controllers', [])
         }
       }
     }])
-  .controller('getPWD', ['$scope', '$timeout', '$location', '$ionicLoading', '$http', function ($scope, $timeout, $location, $ionicLoading, $http) {
+  .controller('getPWD', ['$scope', '$timeout', '$location', '$ionicLoading', '$http','$ionicHistory', function ($scope, $timeout, $location, $ionicLoading, $http, $ionicHistory) {
     $scope.userInfo = {};
     $scope.userInfo.pwd = '';
     $scope.userInfo.code = '';
@@ -285,26 +267,6 @@ angular.module('syl.controllers', [])
           return false
         } else {
           $scope.createUser();
-          /*
-           $http.post("http://115.159.102.63/Syl/syl_txt_cd_read_sng_svlt", {
-           "select": "*",
-           "where": 'mobile="' + getLocalStorage('temp', 'country').dial_code + getLocalStorage('user_acc', 'mobile') + '" and code="' + $scope.userInfo.code + '"',
-           "vald_flg": ''
-           }).success(function (data, status, headers, config) {
-           rc = data.rc;
-           if (rc == 0) {
-           console.log('通过啦');
-           setLocalStorage('user_acc', 'password', $scope.userInfo.pwd)
-           $scope.createUser();
-           } else {
-           $ionicLoading.show({template: '验证码错误', noBackdrop: true, duration: 1500});
-           return false
-           }
-           }).error(function (data, status, headers, config) {
-
-           })
-           // $location.path('/user-name');
-           */
         }
       }
     }
@@ -315,7 +277,7 @@ angular.module('syl.controllers', [])
       var str_syl_user_acc = new Object();
       var str_syl_txt_cd = {};
 
-      str_syl_txt_cd.mobile = getLocalStorage("temp", "country").dial_code + getLocalStorage("user_acc", "mobile");
+      str_syl_txt_cd.mobile =getLocalStorage("user_acc", "mobile");
       str_syl_txt_cd.code = $scope.userInfo.code;
       str_syl_txt_cd.country = getLocalStorage("temp", "country").code;
       str_syl_txt_cd.password = $scope.userInfo.pwd;
@@ -335,8 +297,8 @@ angular.module('syl.controllers', [])
         rc = data.rc;
         if (rc == 0) {
           $ionicLoading.show({template: '恭喜您注册成功', noBackdrop: true, duration: 1000});
+          $scope.logon();
           localStorage.isLogin = 1;
-          $scope.getUserId();
         } else {
           $ionicLoading.show({template: '验证码错误', noBackdrop: true, duration: 1000});
           return false;
@@ -347,44 +309,52 @@ angular.module('syl.controllers', [])
         alert('请检查网络');
         return false
       })
-
     };
-    /*
-     $scope.createUser = function () {
-     var tbl_msg = new Array();
-     var str_syl_user_acc = new Object();
-
-     str_syl_user_acc.mobile = getLocalStorage('user_acc', 'mobile');
-     str_syl_user_acc.password = getLocalStorage('user_acc', 'password');
-     str_syl_user_acc.country = getLocalStorage('user_acc', 'country');
-     console.log(syl_user_acc_crt_sng(str_syl_user_acc, 'X', tbl_msg));
-
-     $http.post("http://115.159.102.63/Syl/syl_user_acc_crt_sng_svlt", {
-     "str_syl_user_acc": syl_user_acc_crt_sng(str_syl_user_acc, 'X', tbl_msg),
-     "vald_flg": 'X'
-     }).success(function (data, status, headers, config) {
-     rc = data.rc;
-
-     if (rc == 0) {
-     $ionicLoading.show({template: '恭喜您注册成功', noBackdrop: true, duration: 1000});
-     localStorage.isLogin = 1;
-     $scope.getUserId();
-     }
-     }).error(function (data, status, headers, config) {
-     console.log("error...");
-     alert('请检查网络');
-     return false
-     });
-     }
-     */
-    $scope.getUserId = function () {
+    $scope.logon = function(){
       var rc;
       var str_msg = new Object();
       var str_syl_user_acc = new Object();
+      var str_syl_sess = {};
+      str_syl_user_acc.mobile = getLocalStorage("user_acc", "mobile");
+      str_syl_user_acc.country = getLocalStorage("temp", "country").code;
+
+      str_syl_user_acc.password = MD5($scope.userInfo.pwd).toUpperCase();
+      console.log(str_syl_user_acc);
+      syl_logon(str_syl_user_acc, str_syl_sess, str_msg);
+      $http.post("http://115.159.102.63:80/Syl/syl_logon_svlt", {
+        "str_syl_user_acc": str_syl_user_acc_json_str,
+        "str_syl_sess": str_syl_sess_json_str
+      }).success(function (data, status, headers, config) {
+        rc = data.rc;
+        if (rc == 0) {
+          localStorage.setItem('session',data.str_syl_sess.uuid);
+          setLocalStorage('user_acc','uuid',data.str_syl_sess.uuid_user);
+          console.log()
+          localStorage.isLogin = 1;
+          $scope.getUserId();
+        } else {
+          $ionicLoading.show({template: '您输入的账号或密码有误', noBackdrop: true, duration: 1500});
+          return false
+        }
+      }).error(function (data, status, headers, config) {
+        console.log('失败');
+      })
+    }
+    $scope.getUserId = function () {
+      var rc;
+      var str_msg = new Object();
+      var str_syl_sess = new Object();
+
+      str_syl_sess.uuid=localStorage.getItem('session');
+      str_syl_sess.user_uuid = getLocalStorage('user_acc','uuid');
+
+      syl_user_acc_read_sng(str_syl_sess,str_msg);
+      console.log(str_syl_sess_json_str);
+
       $http.post("http://115.159.102.63/Syl/syl_user_acc_read_sng_svlt", {
         "select": '*',
-        "where": 'mobile =' + getLocalStorage('temp', 'country').dial_code + getLocalStorage('user_acc', 'mobile'),
-        "sess_id": ""
+        "where": 'uuid ="' + getLocalStorage('user_acc','uuid')+'"',
+        "str_syl_sess": str_syl_sess_json_str
       }).success(function (data, status, headers, config) {
         rc = data.rc;
         if (rc == 0) {
@@ -398,7 +368,7 @@ angular.module('syl.controllers', [])
     }
   }])
 
-  .controller('getUserName', ['$scope', '$location', '$http', '$ionicLoading', '$location', function ($scope, $location, $http, $ionicLoading, $location) {
+  .controller('getUserName', ['$scope', '$location', '$http', '$ionicLoading', '$location','$ionicHistory', function ($scope, $location, $http, $ionicLoading, $location,$ionicHistory) {
     $scope.isClick = 0;
     $scope.radio = '男';
     var Regx = /^[0-9]*$/;
@@ -421,14 +391,21 @@ angular.module('syl.controllers', [])
         } else {
           setLocalStorage('user_acc', 'username', $scope.userInfo.username);
           setLocalStorage('user_acc', 'gender', $scope.radio);
-          tbl_msg = new Array();
-          str_syl_user_acc = new Object();
+          var tbl_msg ={};
+          var str_syl_user_acc ={};
+          var str_syl_sess ={};
 
-          console.log(syl_user_acc_upd_sng(str_syl_user_acc, 'X', tbl_msg));
+          str_syl_sess.uuid=localStorage.getItem('session');
+          str_syl_sess.uuid_user = getLocalStorage('user_acc','uuid');
+
+          console.log(str_syl_sess);
+          syl_user_acc_upd_sng(str_syl_user_acc,str_syl_sess,tbl_msg);
+
+          console.log(str_syl_sess_json_str);
 
           $http.post("http://115.159.102.63/Syl/syl_user_acc_upd_sng_svlt", {
             "str_syl_user_acc": localStorage.user_acc,
-            "sess_id": ""
+            "str_syl_sess": str_syl_sess_json_str
           }).success(function (data, status, headers, config) {
             rc = data.rc;
             if (rc == 0) {
