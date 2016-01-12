@@ -214,7 +214,7 @@ angular.module('syl.controllers', [])
                 return false
               });
             } else {
-              $ionicLoading.show({template: '手机号不合法', noBackdrop: true, duration: 1500});
+              $ionicLoading.show({template: '手机号码格式不正确', noBackdrop: true, duration: 1500});
               return false
             }
           }

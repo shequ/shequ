@@ -67,7 +67,6 @@ angular.module('starter', ['ionic','syl.controllers','syl.directives','monospace
     });
   })
   .run(['$ionicPlatform', '$ionicPopup','$rootScope','$location','$ionicHistory', function ($ionicPlatform, $ionicPopup, $rootScope, $location,$ionicHistory) {
-
     //主页面显示退出提示框
     $ionicPlatform.registerBackButtonAction(function (e) {
 
