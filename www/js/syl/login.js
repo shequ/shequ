@@ -1,8 +1,11 @@
-function syl_user_acc_crt_sng(str_syl_user_acc,
-                              vald_flg,
-                              tbl_msg) {
+
+var str_syl_user_acc_json_str = "";
+var str_syl_sess_json_str = "";
+function syl_logon(//test
+  str_syl_user_acc,
+  str_syl_sess,
+  tbl_msg) {
   var str_msg = new Object();
-  var str_syl_user_acc_json_str = "";
   var req_sb = new StringBuilder();
   var rc = 0;
 
@@ -73,59 +76,74 @@ function syl_user_acc_crt_sng(str_syl_user_acc,
   req_sb.append("}");
 
   str_syl_user_acc_json_str = req_sb.toString("");
-  return str_syl_user_acc_json_str;
-}
-
-function syl_txt_cd_mod_sng(str_syl_txt_cd,
-                            vald_flg,
-                            tbl_msg) {
-  var str_msg = new Object();
-  var str_syl_txt_cd_json_str = "";
-  var req_sb = new StringBuilder();
-  var rc = 0;
+//alert(str_syl_user_acc_json_str);
+  req_sb = new StringBuilder();
 
   req_sb.append("{");
   req_sb.append("\"");
-  req_sb.append("mobile");
+  req_sb.append("uuid");
   req_sb.append("\"");
   req_sb.append(":");
   req_sb.append("\"");
-  req_sb.append(str_syl_txt_cd.mobile);
+  req_sb.append(str_syl_sess.uuid);
   req_sb.append("\"");
   req_sb.append(",");
   req_sb.append("\"");
-  req_sb.append("country");
+  req_sb.append("user_uuid");
   req_sb.append("\"");
   req_sb.append(":");
   req_sb.append("\"");
-  req_sb.append(str_syl_txt_cd.country);
+  req_sb.append(str_syl_sess.user_uuid);
   req_sb.append("\"");
   req_sb.append(",");
   req_sb.append("\"");
-  req_sb.append("code");
+  req_sb.append("ip");
   req_sb.append("\"");
   req_sb.append(":");
   req_sb.append("\"");
-  req_sb.append(str_syl_txt_cd.code);
+  req_sb.append(str_syl_sess.ip);
   req_sb.append("\"");
   req_sb.append(",");
   req_sb.append("\"");
-  req_sb.append("lang");
+  req_sb.append("loc");
   req_sb.append("\"");
   req_sb.append(":");
   req_sb.append("\"");
-  req_sb.append(str_syl_txt_cd.lang);
+  req_sb.append(str_syl_sess.loc);
   req_sb.append("\"");
   req_sb.append(",");
   req_sb.append("\"");
-  req_sb.append("exp_datetime");
+  req_sb.append("eqp_id");
   req_sb.append("\"");
   req_sb.append(":");
   req_sb.append("\"");
-  req_sb.append(str_syl_txt_cd.exp_datetime);
+  req_sb.append(str_syl_sess.eqp_id);
+  req_sb.append("\"");
+  req_sb.append(",");
+  req_sb.append("\"");
+  req_sb.append("eqp_name");
+  req_sb.append("\"");
+  req_sb.append(":");
+  req_sb.append("\"");
+  req_sb.append(str_syl_sess.eqp_name);
+  req_sb.append("\"");
+  req_sb.append(",");
+  req_sb.append("\"");
+  req_sb.append("eqp_typ");
+  req_sb.append("\"");
+  req_sb.append(":");
+  req_sb.append("\"");
+  req_sb.append(str_syl_sess.eqp_typ);
+  req_sb.append("\"");
+  req_sb.append(",");
+  req_sb.append("\"");
+  req_sb.append("exp_date");
+  req_sb.append("\"");
+  req_sb.append(":");
+  req_sb.append("\"");
+  req_sb.append(str_syl_sess.exp_date);
   req_sb.append("\"");
   req_sb.append("}");
 
-  str_syl_txt_cd_json_str = req_sb.toString("");
-  return str_syl_txt_cd_json_str;
+  str_syl_sess_json_str = req_sb.toString("");
 }

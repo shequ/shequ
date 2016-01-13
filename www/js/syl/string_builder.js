@@ -10,6 +10,16 @@ StringBuilder.prototype.toString = function (joinGap) {
   return this._stringArray.join(joinGap);
 }
 
+
+//设置本地存储，存取json
+function setJsonLocalStorage(name,value){
+  var obj = {};
+  var str;
+  obj=value;
+  str = JSON.stringify(obj);
+  localStorage.setItem(name,str);
+}
+
 //设置本地存储
 function setLocalStorage(name,pro_name,value){
   var obj = {};
@@ -34,4 +44,9 @@ function getLocalStorage(name,pro_name){
   }else {
     return null;
   }
+}
+
+//重置本地存储
+function resetLocalStorage(name){
+  localStorage.removeItem(name);
 }
