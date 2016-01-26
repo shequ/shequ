@@ -1,56 +1,68 @@
 /* Empty. Add your own CSS if you like */
-body a{
+body a {
   text-decoration: none;
 }
-.radio-inline{
-  -webkit-box-flex:1;
+
+.radio-inline {
+  -webkit-box-flex: 1;
   flex: 1 220px;
 }
-.radio-inline .item{
+
+.radio-inline .item {
   border: none;
   width: 50%;
   float: left;
   padding-top: 6px;
   padding-bottom: 6px;
 }
-.radio-inline .item .checkbox{
+
+.radio-inline .item .checkbox {
   margin-top: -14px;
   padding: 2px 7px;
 }
-.bar.bar-stable .title{
+
+.bar.bar-stable .title {
   color: #fff;
 }
-.bar.bar-stable{
+
+.bar.bar-stable {
   background: #373737;
 }
-.bar-stable .button.button-clear{
+
+.bar-stable .button.button-clear {
   color: #fff;
 }
-.bar-stable .back-text{
+
+.bar-stable .back-text {
   display: none !important;
 }
+
 /*背景*/
-.home-bg{
+.home-bg {
   background: url("../img/79bac96c788978475d6364e5f462effa.jpg") no-repeat center top;
   background-size: cover;
   color: #fff;
 }
-.landing-bg{
+
+.landing-bg {
   background: url("../img/b14c2800f42becaf4d627debb812a326.jpg") no-repeat center top;
   background-size: cover;
   color: #fff;
 }
-.home-div{
+
+.home-div {
   width: 100%;
   position: absolute;
   bottom: 2.35vh;
 }
-.home-bg a{
+
+.home-bg a {
   text-decoration: none;
   color: #fff;
   font-size: 14px;
 }
-.button-register{
+
+.button-register {
   font-size: 16px;
   display: inline-block;
   width: 68.5%;
@@ -59,27 +71,32 @@ body a{
   background: #da293d;
   border-radius: 8px;
 }
-.login-bar{
+
+.login-bar {
   background: #373737;
   color: #fff;
   font-size: 18px;
 }
+
 /*login.html*/
-.login-close{
+.login-close {
   position: absolute;
   z-index: 100;
   right: 20px;
   top: 20px;
   font-size: 30px;
 }
+
 .login-style {
   background: #f2f2f2;
 }
-.login-style .has-header{
+
+.login-style .has-header {
   top: 0;
   margin-top: 33vh;
 }
-.login-btn-clear{
+
+.login-btn-clear {
   color: #fff;
   text-decoration: none;
   font-size: 16px;
@@ -91,32 +108,39 @@ body a{
   border-radius: 1.2vh;
   background: #dcdcdc;
 }
-.button-login{
+
+.button-login {
   background: #da293d;
   cursor: pointer;
 }
-.login-text{
+
+.login-text {
   margin-top: 2vh;
   padding: 0 10%;
 }
-.login-text a{
+
+.login-text a {
   color: #2a2a2a;
 }
-.login-bar .button{
+
+.login-bar .button {
   color: #fff !important;
 }
-.login-bar .title{
+
+.login-bar .title {
   color: #fff;
   font-size: 18px;
 }
-.view-container{
+
+.view-container {
   background: #e3e3e3;
 }
-.login-div .has-header{
+
+.login-div .has-header {
   top: 60px;
 }
 
-.jumpTo{
+.jumpTo {
   position: absolute;
   right: 30px;
   top: 30px;
@@ -130,3 +154,158 @@ body a{
   border-radius: 15px;
   opacity: .3;
 }
+
+.left-menu {
+  background: #fff !important;
+}
+
+.left-menu-content {
+  padding-top: 30%;
+}
+
+.menu-face {
+  width: 100%;
+  height: auto;
+  text-align: center;
+}
+
+.menu-face .face {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 1px solid #d5d5d5;
+  overflow: hidden;
+}
+
+.menu-face .face img {
+  width: 100%;
+  border-radius: 50%;
+}
+
+.user-name {
+  text-align: center;
+  font-size: 16px;
+}
+
+.left-menu-content .list {
+  text-align: center;
+}
+
+
+.bar.bar-positive {
+  background: #a852cf !important;
+}
+
+.scroll-content {
+}
+
+.home-item {
+  margin-bottom: 7px;
+  background: #fff;
+}
+
+.home-item .home-item-top {
+  box-sizing: border-box;
+  padding: 8px 15px;
+}
+.color_a852cf{
+  color: #a852cf;
+}
+.home-item p{
+  margin: 0;
+}
+.h-t-face {
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  float: left;
+  overflow: hidden;
+  margin-right: 7px;
+}
+.h-t-face img{
+  width: 100%;
+}
+.home-item-img{
+  width: 100%;
+  height: auto;
+}
+.home-item-img img{
+  width: 100%;
+  height: auto;
+  float: left;
+}
+.home-item-detail{
+  padding: 5px 10px;
+  box-sizing: border-box;
+}
+.home-item-detail .content{
+  color: #222;
+  font-size: 14px;
+}
+.home-item-detail .property{
+  color: #999;
+  font-size: 12px;
+}
+
+
+/* Empty. Add your own CSS if you like */
+.slider-pager .slider-pager-page{
+  color: #fff;
+}
+.modal-backdrop.active{
+  background-color: #1a1a1a;
+}
+.image-modal {
+  width: 100% !important;
+  height: 100%;
+  top: 0 !important;
+  left: 0 !important;
+}
+
+.transparent {
+  background: transparent !important;
+}
+
+.fullscreen-image {
+  max-width: 100%;
+  max-height: 100%;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+.slider {
+  width: 100%;
+  height: 100%;
+}
+
+.image-list-thumb {
+  padding: 2px 2px 2px 2px;
+  height: 100px;
+}
+
+
+.centerme {
+  margin: 0 auto;
+  width: 100%;
+  height:100%;
+}
+
+.fullscreen-player {
+  max-width: 100%;
+  max-height: 100%;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  overflow: none;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+

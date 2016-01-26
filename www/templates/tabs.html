@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
 
-</body>
-</html>
+<ion-view left-buttons="leftButtons">
+  <ion-tabs class="tabs-icon-top tabs-color-active-royal">
+    <ion-tab title="首页" icon-on="ion-ios-home" icon-off="ion-ios-home-outline" ui-sref="event.tab.home">
+      <ion-nav-view animation="slide-left-right" name="tab-home"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab title="动态" icon-on="ion-ios-bell" icon-off="ion-ios-bell-outline" ui-sref="event.tab.moment">
+      <ion-nav-view animation="slide-left-right" name="tab-moment"></ion-nav-view>
+    </ion-tab>
+    <ion-tab title="商店" icon-on="ion-ios-paperplane" icon-off="ion-ios-paperplane-outline" ui-sref="event.tab.shop">
+      <ion-nav-view animation="slide-left-right" name="tab-shop"></ion-nav-view>
+    </ion-tab>
+    <ion-tab title="个人" icon-off="ion-ios-person-outline" icon-on="ion-ios-person" ui-sref="event.tab.user">
+      <ion-nav-view animation="slide-left-right" name="tab-user"></ion-nav-view>
+    </ion-tab>
+  </ion-tabs>
+</ion-view>
+

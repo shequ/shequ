@@ -3,8 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic','syl.controllers','syl.directives','monospaced.elastic','syl.routes','syl.services',
-    'ion-index-scroll'],function($httpProvider) {
+angular.module('starter', ['ionic', 'syl.controllers', 'syl.directives', 'monospaced.elastic', 'syl.routes', 'syl.services', , 'syl.controllersMenu', 'ion-gallery', 'ion-index-scroll'], function ($httpProvider) {
   // Use x-www-form-urlencoded Content-Type
   $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 
@@ -13,14 +12,14 @@ angular.module('starter', ['ionic','syl.controllers','syl.directives','monospace
    * @param {Object} obj
    * @return {String}
    */
-  var param = function(obj) {
+  var param = function (obj) {
     var query = '', name, value, fullSubName, subName, subValue, innerObj, i;
 
-    for(name in obj) {
+    for (name in obj) {
       value = obj[name];
 
-      if(value instanceof Array) {
-        for(i=0; i<value.length; ++i) {
+      if (value instanceof Array) {
+        for (i = 0; i < value.length; ++i) {
           subValue = value[i];
           fullSubName = name + '[' + i + ']';
           innerObj = {};
@@ -28,8 +27,8 @@ angular.module('starter', ['ionic','syl.controllers','syl.directives','monospace
           query += param(innerObj) + '&';
         }
       }
-      else if(value instanceof Object) {
-        for(subName in value) {
+      else if (value instanceof Object) {
+        for (subName in value) {
           subValue = value[subName];
           fullSubName = name + '[' + subName + ']';
           innerObj = {};
@@ -37,7 +36,7 @@ angular.module('starter', ['ionic','syl.controllers','syl.directives','monospace
           query += param(innerObj) + '&';
         }
       }
-      else if(value !== undefined && value !== null)
+      else if (value !== undefined && value !== null)
         query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
     }
 
@@ -45,7 +44,7 @@ angular.module('starter', ['ionic','syl.controllers','syl.directives','monospace
   };
 
   // Override $http service's default transformRequest
-  $httpProvider.defaults.transformRequest = [function(data) {
+  $httpProvider.defaults.transformRequest = [function (data) {
     return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
   }];
 })
@@ -66,11 +65,14 @@ angular.module('starter', ['ionic','syl.controllers','syl.directives','monospace
       }
     });
   })
-  .run(['$ionicPlatform', '$ionicPopup','$rootScope','$location','$ionicHistory', function ($ionicPlatform, $ionicPopup, $rootScope, $location,$ionicHistory) {
+  .run(['$ionicPlatform', '$ionicPopup', '$rootScope', '$location', '$ionicHistory', '$ionicSideMenuDelegate', function ($ionicPlatform, $ionicPopup, $rootScope, $location, $ionicHistory, $ionicSideMenuDelegate) {
     //主页面显示退出提示框
     $ionicPlatform.registerBackButtonAction(function (e) {
-
+      console.log(1234);
       e.preventDefault();
+      function toggleLeftSideMenu() {
+        $ionicSideMenuDelegate.toggleLeft();
+      }
 
       function showConfirm() {
         var confirmPopup = $ionicPopup.confirm({
@@ -89,20 +91,27 @@ angular.module('starter', ['ionic','syl.controllers','syl.directives','monospace
         });
       }
 
-      // Is there a page to go back to?
-      if ($location.path() == '/home' ) {
-        showConfirm();
-      }else if($location.path() == '/first-page'){
-        showConfirm();
-      }else if ($ionicHistory.backView()) {
-        $ionicHistory.goBack();
-        // Go back in history
-       // $rootScope.$viewHistory.backView.go();
-      } else {
-        // This is the last page: Show confirmation popup
-        showConfirm();
-      }
 
+      if ($ionicSideMenuDelegate.isOpenLeft()) {
+        alert('一打开')
+      } else {
+        // Is there a page to go back to?
+        if ($location.path() == '/home') {
+          showConfirm();
+        } else if ($location.path() == '/first-page') {
+          showConfirm();
+        } else if ($location.path() == '/event/tab/tab-home' || $location.path() == '/event/tab/tab-moment' || $location.path() == '/event/tab/tab-shop' || $location.path() == '/event/tab/tab-user') {
+          toggleLeftSideMenu();
+          return false;
+        } else if ($ionicHistory.backView()) {
+          $ionicHistory.goBack();
+          // Go back in history
+          // $rootScope.$viewHistory.backView.go();
+        } else {
+          // This is the last page: Show confirmation popup
+          showConfirm();
+        }
+      }
       return false;
     }, 101);
 

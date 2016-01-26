@@ -1,0 +1,17 @@
+{
+  "name": "HelloIonic",
+  "private": "true",
+  "devDependencies": {
+    "ionic": "driftyco/ionic-bower#1.0.0"
+  },
+  "homepage": "https://github.com/billsanto/ion-index-scroll-demo",
+  "_release": "43e74fe0b7",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "43e74fe0b7fc0ac49bf3c30b160ec80aac757114"
+  },
+  "_source": "https://github.com/billsanto/ion-index-scroll-demo.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/billsanto/ion-index-scroll-demo.git"
+}

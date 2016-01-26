@@ -1,10 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<ion-side-menus enable-menu-with-back-views="false" >
 
-</body>
-</html>
+  <ion-side-menu-content drag-content="toggledrag">
+    <ion-nav-bar class="bar-positive">
+
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left" ng-click="toggleLeftSideMenu()">
+        </button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+
+    <ion-nav-view name="event"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left">
+    <ion-content class="left-menu-content" >
+      <div class="menu-face">
+        <a href="" menu-close class="face">
+          <img src="http://tp4.sinaimg.cn/1729948927/180/5735009727/1">
+        </a>
+      </div>
+      <p class="user-name">{{userName}}</p>
+      <ul class="list animate-rip">
+        <!-- Note each link has the 'menu-close' attribute so the menu auto closes when clicking on one of these links -->
+        <a class="item" menu-close ng-click="checkleft()">设置</a>
+        <a class="item" menu-close ng-click="loginOut()">退出</a>
+      </ul>
+    </ion-content>
+  </ion-side-menu>
+
+</ion-side-menus>
